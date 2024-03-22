@@ -1,0 +1,91 @@
+; Opinion Dynamics
+; Iter - Number of iterations
+; bias - Initial Opinion bias
+; mem - Memory
+; Ad - Advertising - 0 for none, 1 for mass, 2 for targeted
+; s - Strength of advertising
+; p - Probability of influence
+to Opinions [Iter bias mem Ad s p]
+  set-current-plot "General"
+  clear-plot
+  set-plot-y-range 0 1
+  let t 0
+  ask nodes [
+    ; Set opinion between -1 and 1
+    set typ (list ((random-float 2) - 1))
+    new-state current_state + abs(current_state) * (bias)
+    set-state
+    set color scale-color blue current_state -1 1
+  ]
+  repeat Iter [
+    print (word "Iteration " t)
+    OpCh mem
+    if Ad = 1 [MassAd s p]
+    if Ad = 2 [TarAd s p]
+    ; Plot the average opinion
+    let avg mean [current_state] of nodes
+    plotxy t avg
+    set t t + 1
+  ]
+end
+
+; Opinion change
+; mem - Memory
+to OpCh [mem]
+    no-display
+    ask nodes [
+        let s current_state
+        ; Each neighbor has a different influence value
+        ; The influence of each neighbor is computed as abs(opinion - 0.5)^2 * 4
+        ; This way nodes who have more extreme opinions have more influence
+        ; let pn sum [abs ([current_state] of self - 0.5) ^ 2 * 4] of link-neighbors / count link-neighbors
+        ; new-state (mem * current_state + (1 - mem) * pn)
+
+        let pn sum ([current_state] of link-neighbors) / count link-neighbors
+        new-state (mem * current_state + (1 - mem) * pn)
+    ]
+    ask nodes [
+        set-state
+    set color scale-color blue current_state -1 1
+    ]
+    display
+end
+
+
+; Advertising
+
+; Mass advertising
+; Nudge every node to 1 with a certain probability
+; s - strength
+; p - probability of influence
+to MassAd [s p]
+  print (word "Mass" p)
+  ask nodes [
+    if random-float 1 < p [
+      let curr current_state
+      ; TODO
+      new-state (curr + s)
+      set-state
+    ]
+  ]
+end
+
+
+; Targeted advertising
+; Nudge nodes with opinion < 0.5 to 1 with a certain probability
+; s - strength
+; p - probability of influence
+to TarAd [s p]
+  ask nodes with [current_state < 0.5] [
+    if random-float 1 < p [
+      let curr current_state
+      ; TODO
+      new-state (curr + s)
+    ]
+  ]
+end
+
+
+to-report Mean_Opinion
+  report mean [current_state] of nodes
+end

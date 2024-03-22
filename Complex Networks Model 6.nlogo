@@ -1,11 +1,28 @@
+;-----------------------------------------------------------------------------------
+;
+; The usual norm is:
+;   Don't change anything in this file. It's the heart of the system.
+; But if you change something, be careful...
+;
+; Write your scripts in the scripts.nls file (open it from "Included Files" chooser)
+;
+; Please, read the Info Tab for instructions...
+;
+;-----------------------------------------------------------------------------------
+
 extensions [ nw rnd]
+
+__includes [ "scripts.nls" "custom.nls" ]
 
 breed [nodes node]
 
 nodes-own [
   degree
+  betweenness
+  eigenvector
   closeness
   clustering
+  page-rank
   community
   phi
   visits
@@ -71,6 +88,19 @@ end
 
 to-report store [val l]
   report lput val l
+end
+
+to inspect-node
+  if mouse-down? [
+    ask nodes [stop-inspecting self]
+    let selected min-one-of nodes [distancexy mouse-xcor mouse-ycor]
+    if selected != nobody [
+      ask selected [
+        if distancexy mouse-xcor mouse-ycor < 1 [inspect self]
+      ]
+    ]
+    wait .2
+  ]
 end
 
 to remove-node [prob]
@@ -272,6 +302,62 @@ to BiP [nb-nodes nb-links]
   post-process
 end
 
+to Edge-Copying [Iter pncd k beta pecd]
+  repeat Iter [
+    ; Creation / Deletion of nodes
+    ifelse random-float 1 > pncd
+    [
+      ask one-of nodes [die]
+    ]
+    [
+      create-nodes 1 [
+        setxy random-xcor random-ycor
+        set color blue
+      ]
+    ]
+    ; Edge Creation
+    let v one-of nodes
+    ifelse random-float 1 < beta
+    [
+      ;creation
+      ask v [
+        let other-k-nodes (other nodes) with [not link-neighbor? v]
+        if count other-k-nodes >= k
+        [
+          set other-k-nodes n-of k other-k-nodes
+        ]
+        create-links-with other-k-nodes
+      ]
+    ]
+    [
+      ; copy
+      let n k
+      while [n > 0] [
+        let u one-of other nodes
+        let other-nodes (([link-neighbors] of u) with [self != v])
+        if count other-nodes > k [
+          set other-nodes n-of k other-nodes
+        ]
+        ask v [
+          create-links-with other-nodes
+        ]
+        set n n - (count other-nodes)
+        ]
+    ]
+    ; Creation / Deletion of edges
+    ifelse random-float 1 < pecd [
+      ask one-of nodes with [count my-links < (count nodes - 1)][
+        let othernode one-of other nodes with [not link-neighbor? myself]
+        create-link-with othernode
+      ]
+    ]
+    [
+      ask one-of links [die]
+    ]
+  ]
+  post-process
+end
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Centrality Measures
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -283,8 +369,11 @@ to compute-centralities
   nw:set-context nodes links
   ask nodes [
     set degree (count my-links)
+    set betweenness nw:betweenness-centrality
+    set eigenvector nw:eigenvector-centrality
     set closeness nw:closeness-centrality
     set clustering nw:clustering-coefficient
+    set page-rank nw:page-rank
   ]
   update-plots
 end
@@ -301,7 +390,10 @@ end
 to plots
   clear-all-plots
   compute-centralities
+  carefully [do-plot ([page-rank] of nodes) "PageRank"][]
   carefully [do-plot ([degree] of nodes) "Degree"][]
+  carefully [do-plot ([nw:betweenness-centrality] of nodes) "Betweenness"][]
+  carefully [do-plot ([nw:eigenvector-centrality] of nodes) "Eigenvector"][]
   carefully [do-plot ([nw:closeness-centrality] of nodes) "Closeness"][]
   carefully [do-plot ([nw:clustering-coefficient] of nodes) "Clustering"][]
   carefully [set diameter compute-diameter 1000][]
@@ -354,8 +446,20 @@ to-report Average-Clustering
   report mean [clustering] of nodes
 end
 
+to-report Average-Betweenness
+  report mean [betweenness] of nodes
+end
+
 to-report Average-Closeness
   report mean [closeness] of nodes
+end
+
+to-report Average-PageRank
+  report mean [page-rank] of nodes
+end
+
+to-report Average-Eigenvector
+  report mean [eigenvector] of nodes
 end
 
 to-report Average-Degree
@@ -383,7 +487,10 @@ to-report All-Measures
                Average-Degree
                Average-Path-Length
                Average-Clustering
+               Average-Betweenness
+               Average-Eigenvector
                Average-Closeness
+               Average-PageRank
                )
 end
 
@@ -456,6 +563,38 @@ to spring
   ]
 end
 
+to help
+  user-message (word "                                      HELP                (Details in Info Tab)" "\n"
+    "----------------------------------------------------------" "\n"
+    "Generators:" "\n"
+    "* ER-RN (N, p)                          * WS (N, k, p)" "\n"
+    "* BA-PA (N, m0, m)                * KE (N, m0, mu)" "\n"
+    "* Geom (N, r)                           * SCM (N, g)" "\n"
+    "* Grid (N,M,t?)                         * BiP (N, M)" "\n"
+    "* Edge-Copying (N, pn, k, b, pe)" "\n"
+    "----------------------------------------------------------" "\n"
+    "Utilities:" "\n"
+    "* Compute-centralities           * Communities" "\n"
+    "* PRank (Iter)                            * Rewire (p)" "\n"
+    "* ContCA (Iter, pIn, p)             * Layout (type)" "\n"
+    "* Print (measure)                     * Print-csv (data)" "\n"
+    "* DiscCA (Iter, pIn, p0_ac, p1_ac)" "\n"
+    "* Spread (Ni, ps, pr, pin, Iter)" "\n"
+    "----------------------------------------------------------" "\n"
+    "Global Measures:" "\n"
+    "  Number-Nodes, Number-Links, Density, Average-Degree," "\n"
+    "  Average-Path-Length, Diameter, Average-Clustering," "\n"
+    "  Average-Betweenness, Average-Eigenvector," "\n"
+    "  Average-Closeness, Average-PageRank, Components" "\n"
+    "----------------------------------------------------------" "\n"
+    "Layouts:  circle, radial, tutte, spring, bipartite" "\n"
+    "----------------------------------------------------------" "\n"
+    "* Save, Load" "\n"
+    "* Export (view)" "\n"
+    "    Views:  Degree, Clustering, Betweenness, Eigenvector, " "\n"
+    "                 Closeness, PageRank" "\n"
+    )
+end
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Saving and loading of network files
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -476,6 +615,47 @@ to export [view]
   let file (word view "-" (replace date-and-time ":" "_") ".csv")
   set view (word view " Distribution")
   export-plot view file
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Page Rank
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+to PRank [n]
+  let damping-factor 0.85
+  ;ask links [ set color gray set thickness 0 ]
+  ask nodes [
+    set rank 1 / count nodes
+    set new-rank 0 ]
+  repeat N [
+    ask nodes
+    [
+      ifelse any? link-neighbors
+      [
+        let rank-increment rank / count link-neighbors
+        ask link-neighbors [
+          set new-rank new-rank + rank-increment
+        ]
+      ]
+      [
+        let rank-increment rank / count nodes
+        ask nodes [
+          set new-rank new-rank + rank-increment
+        ]
+      ]
+    ]
+    ask nodes
+    [
+      ;; set current rank to the new-rank and take the damping-factor into account
+      set rank (1 - damping-factor) / count nodes + damping-factor * new-rank
+    ]
+  ]
+
+  let total-rank sum [rank] of nodes
+  let max-rank max [rank] of nodes
+  ask nodes [
+    set size 0.2 + 2 * (rank / max-rank)
+  ]
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -639,6 +819,24 @@ to set-state
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Communities Detection
+
+to communities
+  carefully [
+    let com nw:louvain-communities
+    let n-com length com
+    (foreach com (range 1 (n-com + 1) 1)[
+      [comm c] ->
+        ask comm [
+          set community c
+          set color (item (c mod 13) base-colors)
+        ]
+    ])
+    ask patches [set pcolor 3 + [color] of min-one-of nodes [distance myself]]
+  ]
+  []
+end
 @#$#@#$#@
 GRAPHICS-WINDOW
 10
@@ -693,7 +891,7 @@ CHOOSER
 Select-Layout
 Select-Layout
 "circle" "radial" "tutte" "bipartite" "spring"
-4
+0
 
 SLIDER
 125
@@ -805,6 +1003,42 @@ NIL
 NIL
 NIL
 1
+
+PLOT
+610
+130
+810
+250
+Betweenness Distribution
+Betweenness
+Nb Nodes
+0.0
+1.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -8630108 true "" "histogram [betweenness] of nodes"
+
+PLOT
+810
+10
+1010
+130
+Eigenvector Distribution
+Eigenvector
+Nb Nodes
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -2674135 true "" ""
 
 PLOT
 810
@@ -928,6 +1162,40 @@ NIL
 
 BUTTON
 955
+25
+1010
+58
+.o0O
+ask nodes [set size eigenvector]\nnormalize-sizes-and-colors 15
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+750
+145
+805
+178
+.o0O
+ask nodes [set size betweenness]\nnormalize-sizes-and-colors violet
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+955
 145
 1010
 178
@@ -950,6 +1218,41 @@ BUTTON
 298
 .o0O
 ask nodes [set size clustering]\nnormalize-sizes-and-colors 55
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+PLOT
+810
+250
+1010
+370
+PageRank Distribution
+Page-Ranking
+Nb Nodes
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -13345367 true "" ""
+
+BUTTON
+955
+265
+1010
+298
+.o0O
+ask nodes [set size page-rank]\nnormalize-sizes-and-colors blue
 NIL
 1
 T
@@ -1022,6 +1325,23 @@ diameter
 1
 11
 
+BUTTON
+550
+10
+637
+43
+BA-PA 500
+script1
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
 SLIDER
 411
 390
@@ -1036,6 +1356,23 @@ gravity
 1
 NIL
 HORIZONTAL
+
+BUTTON
+610
+370
+810
+403
+NIL
+Communities
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 BUTTON
 125
@@ -1072,12 +1409,45 @@ NIL
 1
 
 MONITOR
+755
+180
+805
+225
+Avg
+Average-Betweenness
+2
+1
+11
+
+MONITOR
+960
+60
+1010
+105
+Avg
+Average-eigenvector
+2
+1
+11
+
+MONITOR
 960
 180
 1010
 225
 Avg
 Average-closeness
+3
+1
+11
+
+MONITOR
+960
+300
+1010
+345
+Avg
+Average-pagerank
 3
 1
 11
@@ -1090,6 +1460,17 @@ MONITOR
 N.Comp
 length components
 17
+1
+11
+
+MONITOR
+225
+495
+460
+540
+Mean_Opinion
+Mean_Opinion
+13
 1
 11
 
