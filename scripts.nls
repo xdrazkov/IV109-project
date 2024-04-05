@@ -42,3 +42,10 @@ to grid_
   layout "spring"
   init_opinions_cont
 end
+
+to ke_
+  clear
+  KE num_nodes (sqrt (log num_nodes 5)) 0.07
+  layout "spring"
+  init_opinions_cont
+end

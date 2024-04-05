@@ -841,8 +841,8 @@ end
 GRAPHICS-WINDOW
 0
 10
-1570
-695
+1573
+696
 -1
 -1
 11.1
@@ -1080,7 +1080,7 @@ spring-K
 spring-K
 0
 1
-0.53
+0.25
 .01
 1
 NIL
@@ -1261,6 +1261,23 @@ Change_model
 Change_model
 "voter" "majority" "biased"
 0
+
+BUTTON
+1625
+199
+1689
+233
+KE
+ke_
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 # Complex Networks Toolbox
