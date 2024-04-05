@@ -1095,7 +1095,7 @@ num_nodes
 num_nodes
 20
 1500
-420.0
+620.0
 20
 1
 NIL
@@ -1195,7 +1195,7 @@ Iterations
 Iterations
 1
 250
-108.0
+139.0
 1
 1
 NIL
@@ -1259,8 +1259,8 @@ CHOOSER
 138
 Change_model
 Change_model
-"voter" "majority" "biased"
-0
+"voter" "majority" "biased" "degroot"
+2
 
 BUTTON
 1625
@@ -1283,7 +1283,7 @@ SWITCH
 1757
 14
 1861
-48
+47
 Reset
 Reset
 0

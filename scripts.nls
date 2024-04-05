@@ -1,10 +1,10 @@
 to init_opinions_cont
   ask nodes [
-  ; Set opinion between -1 and 1
-    set typ (list ((random-float 2) - 1))
+  ; Set opinion between 0 and 1
+    set typ (list (random-float 1))
     new-state current_state + abs(current_state) * (0)
     set-state
-    set color scale-color blue current_state -1 1
+    set color scale-color blue current_state 0 1
   ]
 end
 

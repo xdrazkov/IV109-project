@@ -50,11 +50,19 @@ to OpCh [mem tol]
         if (Change_model = "majority") [
             new-state (round (sum ([current_state] of link-neighbors) / count link-neighbors))
         ]
+        let bias 0.03
+        if (Change_model = "biased") [
+            let neighbors_opinions_sum sum ([current_state] of link-neighbors)
+            let neighbors_opinions_count count link-neighbors
+            let nom memory * current_state + ((current_state ^ bias) * neighbors_opinions_sum)
+            let denom memory + ((current_state ^ bias) * neighbors_opinions_sum) + ((1 - current_state) ^ bias) * (neighbors_opinions_count - neighbors_opinions_sum)
+            new-state nom / denom
+        ]
         set-state
     ]
     ask nodes [
         ; set-state
-        set color scale-color blue current_state -1 1
+        set color scale-color blue current_state 0 1
     ]
     display
 end
