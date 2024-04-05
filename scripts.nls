@@ -10,8 +10,15 @@
 ; First Script
 to script1
   clear            ; Clear everything
-  BA-PA 500 2 1    ; Create a Preferential Attatchment Network with 300 nodes
+  BA-PA 100 2 1    ; Create a Preferential Attatchment Network with 300 nodes
   layout "spring"  ; Draw it with a spring distribution
+  ask nodes [
+  ; Set opinion between -1 and 1
+    set typ (list ((random-float 2) - 1))
+    new-state current_state + abs(current_state) * (0)
+    set-state
+    set color scale-color blue current_state -1 1
+  ]
 end
 
 ; Second script

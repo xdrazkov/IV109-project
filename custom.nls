@@ -7,26 +7,26 @@
 ; p - Probability of influence
 ; tol - Tolerance range
 to Opinions [Iter bias mem Ad s p tol]
-  set-current-plot "General"
-  clear-plot
-  set-plot-y-range 0 1
-  let t 0
-  ask nodes [
+  ; set-current-plot "General"
+  ; clear-plot
+  ; set-plot-y-range 0 1
+  ; let t 0
+  ; ask nodes [
     ; Set opinion between -1 and 1
-    set typ (list ((random-float 2) - 1))
-    new-state current_state + abs(current_state) * (bias)
-    set-state
-    set color scale-color blue current_state -1 1
-  ]
+  ;   set typ (list ((random-float 2) - 1))
+  ;   new-state current_state + abs(current_state) * (bias)
+  ;   set-state
+  ;  set color scale-color blue current_state -1 1
+  ;l]
   repeat Iter [
-    print (word "Iteration " t)
+    ; print (word "Iteration " t)
     OpCh mem tol
     if Ad = 1 [MassAd s p]
     if Ad = 2 [TarAd s p]
     ; Plot the average opinion
     let avg mean [current_state] of nodes
-    plotxy t avg
-    set t t + 1
+    ; plotxy t avg
+    ; set t t + 1
   ]
 end
 
@@ -45,10 +45,10 @@ to OpCh [mem tol]
         
         ; Only neighbors whose opinion is withing a certain range have influence
         ; But check if there are such neighbors first
-        ifelse count link-neighbors with [abs ([current_state] of self - current_state) < tol] > 0 [
+        if count link-neighbors with [abs ([current_state] of self - current_state) < tol] > 0 [
           let pn mean ([current_state] of link-neighbors with [abs ([current_state] of self - current_state) < tol])
           new-state (mem * current_state + (1 - mem) * pn)
-        ] [ new-state current_state * 1.1 ]
+        ]
     ]
     ask nodes [
         set-state
