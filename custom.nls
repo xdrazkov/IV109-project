@@ -45,14 +45,22 @@ to OpCh [mem tol]
         
         ; Only neighbors whose opinion is withing a certain range have influence
         ; But check if there are such neighbors first
-        if count link-neighbors with [abs ([current_state] of self - current_state) < tol] > 0 [
-          let pn mean ([current_state] of link-neighbors with [abs ([current_state] of self - current_state) < tol])
-          new-state (mem * current_state + (1 - mem) * pn)
+        ; if count link-neighbors with [abs ([current_state] of self - current_state) < tol] > 0 [
+        ;   let pn mean ([current_state] of link-neighbors with [abs ([current_state] of self - current_state) < tol])
+        ;   new-state (mem * current_state + (1 - mem) * pn)
+        ; ]
+    
+        if (Change_model = "voter") [
+            new-state ([current_state] of (one-of link-neighbors))
         ]
+        if (Change_model = "majority") [
+            new-state (round (sum ([current_state] of link-neighbors) / count link-neighbors))
+        ]
+        set-state
     ]
     ask nodes [
-        set-state
-    set color scale-color blue current_state -1 1
+        ; set-state
+        set color scale-color blue current_state -1 1
     ]
     display
 end
