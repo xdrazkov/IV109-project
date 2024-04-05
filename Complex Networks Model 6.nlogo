@@ -841,8 +841,8 @@ end
 GRAPHICS-WINDOW
 0
 10
-1173
-562
+1570
+695
 -1
 -1
 11.1
@@ -855,10 +855,10 @@ GRAPHICS-WINDOW
 0
 0
 1
--52
-52
--24
-24
+-70
+70
+-30
+30
 0
 0
 0
@@ -866,20 +866,20 @@ ticks
 30.0
 
 CHOOSER
-990
-480
-1100
-525
+1375
+483
+1485
+528
 Select-Layout
 Select-Layout
 "circle" "radial" "tutte" "bipartite" "spring"
 0
 
 SLIDER
-1105
-515
-1197
-548
+1490
+518
+1582
+551
 size-N
 size-N
 0
@@ -891,10 +891,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-990
-525
-1045
-558
+1375
+528
+1430
+561
 Layout
 layout Select-Layout
 NIL
@@ -908,10 +908,10 @@ NIL
 1
 
 BUTTON
-1045
-525
-1100
-558
+1430
+528
+1485
+561
 Spring
 spring
 T
@@ -925,10 +925,10 @@ NIL
 1
 
 BUTTON
-1200
-515
-1255
-548
+1585
+518
+1640
+551
 NIL
 refresh
 NIL
@@ -942,10 +942,10 @@ NIL
 1
 
 BUTTON
-1255
-515
-1325
-548
+1640
+518
+1710
+551
 Clear
 clear
 NIL
@@ -959,10 +959,10 @@ NIL
 1
 
 MONITOR
-1175
-265
-1225
-310
+1560
+268
+1610
+313
 Nodes
 Number-Nodes
 0
@@ -970,10 +970,10 @@ Number-Nodes
 11
 
 MONITOR
-1225
-265
-1275
-310
+1610
+268
+1660
+313
 Links
 Number-Links
 0
@@ -981,10 +981,10 @@ Number-Links
 11
 
 BUTTON
-1175
-160
-1262
-193
+1560
+163
+1647
+196
 BA-PA
 ba_pa
 NIL
@@ -998,10 +998,10 @@ NIL
 1
 
 SLIDER
-1391
-480
-1483
-513
+1777
+483
+1869
+516
 gravity
 gravity
 0
@@ -1013,10 +1013,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-1175
-310
-1410
-355
+1560
+313
+1795
+358
 Mean_Opinion
 Mean_Opinion
 13
@@ -1024,10 +1024,10 @@ Mean_Opinion
 11
 
 PLOT
-1085
-355
-1485
-475
+1470
+358
+1870
+478
 General
 NIL
 NIL
@@ -1042,10 +1042,10 @@ PENS
 "default" 1.0 0 -16777216 true "" ""
 
 SLIDER
-1295
-480
-1387
-513
+1680
+483
+1772
+516
 rep-K
 rep-K
 0
@@ -1057,10 +1057,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1200
-480
-1292
-513
+1585
+483
+1677
+516
 length-K
 length-K
 0
@@ -1072,10 +1072,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1105
-480
-1197
-513
+1490
+483
+1582
+516
 spring-K
 spring-K
 0
@@ -1087,25 +1087,25 @@ NIL
 HORIZONTAL
 
 SLIDER
-1175
-230
-1347
-263
+1560
+233
+1732
+266
 num_nodes
 num_nodes
 20
 1500
-100.0
+420.0
 20
 1
 NIL
 HORIZONTAL
 
 BUTTON
-1260
-160
-1322
-193
+1645
+163
+1707
+196
 ER-RN
 er_rn
 NIL
@@ -1119,10 +1119,10 @@ NIL
 1
 
 BUTTON
-1320
-160
-1383
-193
+1705
+163
+1768
+196
 WS
 ws_
 NIL
@@ -1136,10 +1136,10 @@ NIL
 1
 
 BUTTON
-1380
-160
-1442
-193
+1765
+163
+1827
+196
 Geom
 geo
 NIL
@@ -1153,10 +1153,10 @@ NIL
 1
 
 BUTTON
-1175
-195
-1238
-228
+1560
+198
+1623
+231
 Grid
 grid_
 NIL
@@ -1170,11 +1170,11 @@ NIL
 1
 
 BUTTON
-1185
-10
-1262
-43
-Opinions
+1570
+13
+1647
+46
+Start
 Opinions Iterations Bias_ Memory Advertising 0 0 2
 NIL
 1
@@ -1187,25 +1187,25 @@ NIL
 1
 
 SLIDER
-1170
-45
-1342
-78
+1555
+48
+1727
+81
 Iterations
 Iterations
 1
 250
-3.0
+19.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-1170
-80
-1342
-113
+1555
+83
+1727
+116
 Bias_
 Bias_
 0
@@ -1217,10 +1217,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1170
-110
-1342
-143
+1555
+113
+1727
+146
 Memory
 Memory
 0
@@ -1232,15 +1232,35 @@ NIL
 HORIZONTAL
 
 SWITCH
-1265
-10
-1372
-43
+1650
+13
+1757
+46
 Advertising
 Advertising
 1
 1
 -1000
+
+CHOOSER
+1725
+48
+1863
+93
+Ad_type
+Ad_type
+"global" "targeted" "hubs"
+0
+
+CHOOSER
+1725
+93
+1863
+138
+Change_model
+Change_model
+"voter" "majority" "biased"
+0
 
 @#$#@#$#@
 # Complex Networks Toolbox
