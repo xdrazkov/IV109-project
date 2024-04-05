@@ -11,6 +11,7 @@ to Opinions [Iter bias mem Ad s p tol]
   clear-plot
   set-plot-y-range 0 1
   let t 0
+  if Reset [init_opinions_cont]
   repeat Iter [
     ; print (word "Iteration " t)
     OpCh mem tol

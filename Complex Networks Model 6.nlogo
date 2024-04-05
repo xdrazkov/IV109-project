@@ -1195,7 +1195,7 @@ Iterations
 Iterations
 1
 250
-19.0
+108.0
 1
 1
 NIL
@@ -1278,6 +1278,17 @@ NIL
 NIL
 NIL
 1
+
+SWITCH
+1757
+14
+1861
+48
+Reset
+Reset
+0
+1
+-1000
 
 @#$#@#$#@
 # Complex Networks Toolbox
