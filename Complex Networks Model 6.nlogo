@@ -820,23 +820,6 @@ end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Communities Detection
-
-to communities
-  carefully [
-    let com nw:louvain-communities
-    let n-com length com
-    (foreach com (range 1 (n-com + 1) 1)[
-      [comm c] ->
-        ask comm [
-          set community c
-          set color (item (c mod 13) base-colors)
-        ]
-    ])
-    ask patches [set pcolor 3 + [color] of min-one-of nodes [distance myself]]
-  ]
-  []
-end
 @#$#@#$#@
 GRAPHICS-WINDOW
 0
@@ -864,6 +847,42 @@ GRAPHICS-WINDOW
 0
 ticks
 30.0
+
+PLOT
+1570
+665
+1830
+845
+Degree Distribution
+Degree
+Nb Nodes
+0.0
+100.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -7500403 true "" "histogram [count my-links] of nodes"
+
+PLOT
+1310
+670
+1570
+830
+Clustering distribution
+Clustering
+Nb Nodes
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -6459832 true "" ""
 
 CHOOSER
 1375
@@ -1080,7 +1099,7 @@ spring-K
 spring-K
 0
 1
-0.25
+0.0
 .01
 1
 NIL
@@ -1095,7 +1114,7 @@ num_nodes
 num_nodes
 20
 1500
-620.0
+1000.0
 20
 1
 NIL
@@ -1259,8 +1278,8 @@ CHOOSER
 138
 Change_model
 Change_model
-"voter" "majority" "biased" "degroot"
-2
+"voter" "majority" "degroot" "biased"
+3
 
 BUTTON
 1625
@@ -1289,6 +1308,34 @@ Reset
 0
 1
 -1000
+
+MONITOR
+1675
+555
+1750
+600
+Avg Pth Lgth
+Average-Path-Length
+3
+1
+11
+
+BUTTON
+1570
+555
+1672
+588
+Compute stats
+clear-all-plots\ncompute-centralities\ncarefully [do-plot ([degree] of nodes) \"Degree\"][]\ncarefully [do-plot ([nw:clustering-coefficient] of nodes) \"Clustering\"][]
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 # Complex Networks Toolbox

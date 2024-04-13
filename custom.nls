@@ -31,18 +31,6 @@ to OpCh [mem tol]
     no-display
     ask nodes [
         let s current_state
-        ; Each neighbor has a different influence value
-        ; The influence of each neighbor is computed as abs(opinion - 0.5)^2 * 4
-        ; This way nodes who have more extreme opinions have more influence
-        ; let pn sum [abs ([current_state] of self - 0.5) ^ 2 * 4] of link-neighbors / count link-neighbors
-        ; new-state (mem * current_state + (1 - mem) * pn)
-        
-        ; Only neighbors whose opinion is withing a certain range have influence
-        ; But check if there are such neighbors first
-        ; if count link-neighbors with [abs ([current_state] of self - current_state) < tol] > 0 [
-        ;   let pn mean ([current_state] of link-neighbors with [abs ([current_state] of self - current_state) < tol])
-        ;   new-state (mem * current_state + (1 - mem) * pn)
-        ; ]
     
         if (Change_model = "voter") [
             new-state ([current_state] of (one-of link-neighbors))
