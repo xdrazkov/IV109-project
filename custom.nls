@@ -93,3 +93,31 @@ end
 to-report Mean_Opinion
   report mean [current_state] of nodes
 end
+
+; Similar opinion clustering defined as ratio of neighbors with an opinion within a tolerance range
+to-report Opinion_Clustering_Opinion
+  let my-opinion current_state
+  let neighbors-opinions [current_state] of link-neighbors
+  let tolerance-range 0.1
+  let count-within-range 0
+  let total-neighbors length neighbors-opinions
+  foreach neighbors-opinions [
+    x -> if abs (x - my-opinion) <= tolerance-range [
+      set count-within-range count-within-range + 1
+    ]
+  ]
+  ifelse total-neighbors = 0 [
+    report 0  ; Avoid division by zero
+  ] [
+    report count-within-range / total-neighbors
+  ]
+end
+
+to-report Mean_Opinion_Clustering
+  let sum-opinion-clustering 0
+  ask nodes [
+    set sum-opinion-clustering sum-opinion-clustering + Opinion_Clustering_Opinion
+  ]
+  report sum-opinion-clustering / count nodes
+end
+

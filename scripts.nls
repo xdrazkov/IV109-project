@@ -1,6 +1,6 @@
 to init_opinions_cont
   ask nodes [
-    ifelse Continuous [ set typ (list (random-float 1)) ] [ set typ (list (random 2)) ]
+    ifelse Continuous [ set typ (list (random-float 1)) ] [ set typ (list (random-float 1)) ]
     new-state current_state + abs(current_state) * (0)
     set-state
     set color scale-color blue current_state 0 1
@@ -9,7 +9,7 @@ end
 
 to ba_pa
   clear
-  BA-PA num_nodes 4 3
+  BA-PA num_nodes 2 1
   layout "spring"
   init_opinions_cont
 end

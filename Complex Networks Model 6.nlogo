@@ -1098,7 +1098,7 @@ spring-K
 spring-K
 0
 1
-0.0
+0.03
 .01
 1
 NIL
@@ -1113,7 +1113,7 @@ num_nodes
 num_nodes
 20
 1500
-1000.0
+560.0
 20
 1
 NIL
@@ -1346,6 +1346,17 @@ Continuous
 1
 1
 -1000
+
+MONITOR
+1755
+555
+1862
+600
+Opinion clustering
+Mean_Opinion_Clustering
+3
+1
+11
 
 @#$#@#$#@
 # Complex Networks Toolbox
