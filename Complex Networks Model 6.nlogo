@@ -819,7 +819,6 @@ to set-state
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 0
@@ -1336,6 +1335,17 @@ NIL
 NIL
 NIL
 1
+
+SWITCH
+1745
+230
+1857
+263
+Continuous
+Continuous
+1
+1
+-1000
 
 @#$#@#$#@
 # Complex Networks Toolbox
