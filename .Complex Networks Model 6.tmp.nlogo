@@ -1111,9 +1111,9 @@ SLIDER
 266
 num_nodes
 num_nodes
-20
+5
 1500
-560.0
+445.0
 20
 1
 NIL
@@ -1211,9 +1211,9 @@ SLIDER
 81
 Iterations
 Iterations
-1
+0
 250
-30.0
+100.0
 1
 1
 NIL
@@ -1357,6 +1357,24 @@ Mean_Opinion_Clustering
 3
 1
 11
+
+PLOT
+1075
+695
+1275
+845
+Opinion clustering
+ticks
+opinion clustering
+0.0
+2.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"pen-0" 1.0 0 -16777216 true "" "plot Mean_Opinion_Clustering"
 
 @#$#@#$#@
 # Complex Networks Toolbox

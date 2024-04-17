@@ -1113,7 +1113,7 @@ num_nodes
 num_nodes
 5
 1500
-285.0
+445.0
 20
 1
 NIL
@@ -1213,7 +1213,7 @@ Iterations
 Iterations
 0
 250
-25.0
+30.0
 1
 1
 NIL
@@ -1372,8 +1372,9 @@ opinion clustering
 1.0
 true
 false
-"" "plot Mean_Opinion_Clustering"
+"" ""
 PENS
+"pen-0" 1.0 0 -16777216 true "" "plot Mean_Opinion_Clustering"
 
 @#$#@#$#@
 # Complex Networks Toolbox
