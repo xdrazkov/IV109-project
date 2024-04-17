@@ -1,6 +1,6 @@
 to init_opinions_cont
   ask nodes [
-    ifelse Continuous [ set typ (list (random-float 1)) ] [ set typ (list (random-float 1)) ]
+    ifelse Continuous [ set typ (list (random-float 1)) ] [ set typ (list (one-of [0 1])) ]
     new-state current_state + abs(current_state) * (0)
     set-state
     set color scale-color blue current_state 0 1
