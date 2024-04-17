@@ -39,7 +39,9 @@ to OpCh [mem tol]
         let s current_state
     
         if (Change_model = "voter") [
-            new-state ([current_state] of (one-of link-neighbors))
+            if (count link-neighbors != 0) [
+                new-state ([current_state] of (one-of link-neighbors))
+            ]
         ]
         if (Change_model = "majority") [
             new-state (round (sum ([current_state] of link-neighbors) / count link-neighbors))
