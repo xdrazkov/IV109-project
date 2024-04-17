@@ -7,12 +7,18 @@
 ; p - Probability of influence
 ; tol - Tolerance range
 to Opinions [Iter bias mem Ad s p tol]
+  set-current-plot "Opinion clustering"
+  clear-plot
   set-current-plot "General"
   clear-plot
   set-plot-y-range 0 1
   let t 0
   if Reset [init_opinions_cont]
   repeat Iter [
+    set-current-plot "Opinion clustering"
+    plotxy t Mean_Opinion_Clustering
+    set-current-plot "General"
+    
     ; print (word "Iteration " t)
     OpCh mem tol
     if Ad = 1 [MassAd s p]

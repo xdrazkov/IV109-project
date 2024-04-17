@@ -9,7 +9,7 @@ end
 
 to ba_pa
   clear
-  BA-PA num_nodes 2 1
+  BA-PA num_nodes 4 3
   layout "spring"
   init_opinions_cont
 end

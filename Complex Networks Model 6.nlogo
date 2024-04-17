@@ -848,10 +848,10 @@ ticks
 30.0
 
 PLOT
-1570
-665
-1830
-845
+1575
+630
+1835
+810
 Degree Distribution
 Degree
 Nb Nodes
@@ -1111,9 +1111,9 @@ SLIDER
 266
 num_nodes
 num_nodes
-20
+5
 1500
-560.0
+285.0
 20
 1
 NIL
@@ -1211,9 +1211,9 @@ SLIDER
 81
 Iterations
 Iterations
-1
+0
 250
-139.0
+25.0
 1
 1
 NIL
@@ -1278,7 +1278,7 @@ CHOOSER
 Change_model
 Change_model
 "voter" "majority" "degroot" "biased"
-3
+0
 
 BUTTON
 1625
@@ -1357,6 +1357,23 @@ Mean_Opinion_Clustering
 3
 1
 11
+
+PLOT
+1075
+695
+1275
+845
+Opinion clustering
+ticks
+opinion clustering
+0.0
+2.0
+0.0
+1.0
+true
+false
+"" "plot Mean_Opinion_Clustering"
+PENS
 
 @#$#@#$#@
 # Complex Networks Toolbox
