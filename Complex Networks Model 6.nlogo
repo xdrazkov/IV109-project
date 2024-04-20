@@ -538,7 +538,7 @@ end
 
 to refresh
   ask nodes [
-    set size Size-N
+    set size 0.7
     set label ""
 ;    set color red
   ]
@@ -557,9 +557,9 @@ to post-process
 end
 
 to spring
-  layout-spring turtles links spring-K length-K rep-K
+  layout-spring turtles links 0.03 3.64 0.416
   ask nodes [
-    setxy (xcor * (1 - gravity / 1000)) (ycor * (1 - gravity / 1000))
+    setxy (xcor * (1 - 0 / 1000)) (ycor * (1 - 0 / 1000))
   ]
 end
 
@@ -607,6 +607,7 @@ to save
 end
 
 to load
+  clear
   nw:set-context nodes links
   nw:load-graphml user-file
 end
@@ -824,7 +825,7 @@ GRAPHICS-WINDOW
 0
 10
 1351
-695
+696
 -1
 -1
 11.1
@@ -848,10 +849,10 @@ ticks
 30.0
 
 PLOT
-1575
-630
-1835
-810
+262
+696
+522
+876
 Degree Distribution
 Degree
 Nb Nodes
@@ -866,10 +867,10 @@ PENS
 "default" 1.0 1 -7500403 true "" "histogram [count my-links] of nodes"
 
 PLOT
-1310
-670
-1570
-830
+3
+698
+263
+858
 Clustering distribution
 Clustering
 Nb Nodes
@@ -883,104 +884,11 @@ false
 PENS
 "default" 1.0 1 -6459832 true "" ""
 
-CHOOSER
-1375
-483
-1485
-528
-Select-Layout
-Select-Layout
-"circle" "radial" "tutte" "bipartite" "spring"
-0
-
-SLIDER
-1490
-518
-1582
-551
-size-N
-size-N
-0
-2
-0.7
-.1
-1
-NIL
-HORIZONTAL
-
-BUTTON
-1375
-528
-1430
-561
-Layout
-layout Select-Layout
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-1430
-528
-1485
-561
-Spring
-spring
-T
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-1585
-518
-1640
-551
-NIL
-refresh
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-1640
-518
-1710
-551
-Clear
-clear
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
 MONITOR
-1560
-268
-1610
-313
+1360
+253
+1410
+298
 Nodes
 Number-Nodes
 0
@@ -988,10 +896,10 @@ Number-Nodes
 11
 
 MONITOR
-1610
-268
-1660
-313
+1410
+253
+1460
+298
 Links
 Number-Links
 0
@@ -999,10 +907,10 @@ Number-Links
 11
 
 BUTTON
-1560
-163
-1647
-196
+1359
+150
+1446
+183
 BA-PA
 ba_pa
 NIL
@@ -1015,26 +923,11 @@ NIL
 NIL
 1
 
-SLIDER
-1777
-483
-1869
-516
-gravity
-gravity
-0
-10
-0.0
-.01
-1
-NIL
-HORIZONTAL
-
 MONITOR
-1665
-270
-1900
-315
+1462
+255
+1697
+300
 Mean_Opinion
 Mean_Opinion
 13
@@ -1042,10 +935,10 @@ Mean_Opinion
 11
 
 PLOT
-1560
-315
-1960
-435
+1359
+298
+1788
+437
 General
 NIL
 NIL
@@ -1060,55 +953,10 @@ PENS
 "default" 1.0 0 -16777216 true "" ""
 
 SLIDER
-1680
-483
-1772
-516
-rep-K
-rep-K
-0
-2
-0.416
-.001
-1
-NIL
-HORIZONTAL
-
-SLIDER
-1585
-483
-1677
-516
-length-K
-length-K
-0
-5
-3.64
-.01
-1
-NIL
-HORIZONTAL
-
-SLIDER
-1490
-483
-1582
-516
-spring-K
-spring-K
-0
-1
-0.03
-.01
-1
-NIL
-HORIZONTAL
-
-SLIDER
-1560
-233
-1732
-266
+1360
+219
+1532
+252
 num_nodes
 num_nodes
 5
@@ -1120,10 +968,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-1645
-163
-1707
-196
+1445
+150
+1507
+183
 ER-RN
 er_rn
 NIL
@@ -1137,10 +985,10 @@ NIL
 1
 
 BUTTON
-1705
-163
-1768
-196
+1505
+150
+1568
+183
 WS
 ws_
 NIL
@@ -1154,10 +1002,10 @@ NIL
 1
 
 BUTTON
-1765
-163
-1827
-196
+1490
+182
+1552
+215
 Geom
 geo
 NIL
@@ -1171,10 +1019,10 @@ NIL
 1
 
 BUTTON
-1560
-198
-1623
-231
+1359
+183
+1422
+216
 Grid
 grid_
 NIL
@@ -1188,10 +1036,10 @@ NIL
 1
 
 BUTTON
-1570
-13
-1647
-46
+1369
+15
+1446
+48
 Start
 Opinions Bias_ 0 2
 NIL
@@ -1205,10 +1053,10 @@ NIL
 1
 
 SLIDER
-1555
-48
-1727
-81
+1355
+49
+1527
+82
 Iterations
 Iterations
 0
@@ -1220,10 +1068,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1555
-83
-1727
-116
+1355
+85
+1527
+118
 Bias_
 Bias_
 0
@@ -1235,10 +1083,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1555
-113
-1727
-146
+1355
+115
+1527
+148
 Memory
 Memory
 0
@@ -1250,10 +1098,10 @@ NIL
 HORIZONTAL
 
 SWITCH
-1650
-13
-1757
-46
+1449
+15
+1556
+48
 Advertising
 Advertising
 0
@@ -1261,30 +1109,30 @@ Advertising
 -1000
 
 CHOOSER
-1725
-48
-1863
-93
+1525
+49
+1663
+94
 Ad_type
 Ad_type
 "random" "max_opinion" "min_opinion" "hubs"
 0
 
 CHOOSER
-1725
-93
-1863
-138
+1525
+95
+1663
+140
 Change_model
 Change_model
 "voter" "biased_average" "degroot" "biased"
 0
 
 BUTTON
-1625
-199
-1689
-233
+1425
+183
+1489
+217
 KE
 ke_
 NIL
@@ -1298,10 +1146,10 @@ NIL
 1
 
 SWITCH
-1757
-14
-1861
-47
+1556
+15
+1660
+48
 Reset
 Reset
 0
@@ -1309,10 +1157,10 @@ Reset
 -1000
 
 MONITOR
-1675
-555
-1750
-600
+1539
+526
+1614
+571
 Avg Pth Lgth
 Average-Path-Length
 3
@@ -1320,10 +1168,10 @@ Average-Path-Length
 11
 
 BUTTON
-1570
-555
-1672
-588
+1535
+440
+1637
+473
 Compute stats
 clear-all-plots\ncompute-centralities\ncarefully [do-plot ([degree] of nodes) \"Degree\"][]\ncarefully [do-plot ([nw:clustering-coefficient] of nodes) \"Clustering\"][]
 NIL
@@ -1337,10 +1185,10 @@ NIL
 1
 
 SWITCH
-1745
-230
-1857
-263
+1538
+220
+1650
+253
 Continuous
 Continuous
 0
@@ -1348,10 +1196,10 @@ Continuous
 -1000
 
 MONITOR
-1755
-555
-1862
-600
+1538
+478
+1645
+523
 Opinion clustering
 Mean_Opinion_Clustering
 3
@@ -1359,10 +1207,10 @@ Mean_Opinion_Clustering
 11
 
 PLOT
-1075
-695
-1275
-845
+1362
+592
+1607
+770
 Opinion clustering
 ticks
 opinion clustering
@@ -1377,10 +1225,10 @@ PENS
 "pen-0" 1.0 0 -16777216 true "" "plot Mean_Opinion_Clustering"
 
 SLIDER
-890
-700
-1062
-733
+1360
+440
+1532
+473
 ad_targets
 ad_targets
 0
@@ -1392,10 +1240,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-890
-740
-1062
-773
+1360
+480
+1532
+513
 ad_effect
 ad_effect
 -1
@@ -1407,10 +1255,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-890
-780
-1062
-813
+1360
+520
+1532
+553
 ad_effectiveness
 ad_effectiveness
 0
@@ -1422,10 +1270,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-890
-815
-1062
-848
+1360
+555
+1532
+588
 ad_count
 ad_count
 0
