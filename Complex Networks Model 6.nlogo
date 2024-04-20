@@ -823,8 +823,8 @@ end
 GRAPHICS-WINDOW
 0
 10
-1573
-696
+1351
+695
 -1
 -1
 11.1
@@ -837,8 +837,8 @@ GRAPHICS-WINDOW
 0
 0
 1
--70
-70
+-60
+60
 -30
 30
 0
@@ -1031,10 +1031,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-1560
-313
-1795
-358
+1665
+270
+1900
+315
 Mean_Opinion
 Mean_Opinion
 13
@@ -1042,10 +1042,10 @@ Mean_Opinion
 11
 
 PLOT
-1470
-358
-1870
-478
+1560
+315
+1960
+435
 General
 NIL
 NIL
@@ -1113,7 +1113,7 @@ num_nodes
 num_nodes
 5
 1500
-1000.0
+205.0
 10
 1
 NIL
@@ -1193,7 +1193,7 @@ BUTTON
 1647
 46
 Start
-Opinions Iterations Bias_ Memory Advertising 0 0 2
+Opinions Bias_ 0 2
 NIL
 1
 T
@@ -1213,7 +1213,7 @@ Iterations
 Iterations
 0
 250
-30.0
+51.0
 1
 1
 NIL
@@ -1256,7 +1256,7 @@ SWITCH
 46
 Advertising
 Advertising
-1
+0
 1
 -1000
 
@@ -1267,7 +1267,7 @@ CHOOSER
 93
 Ad_type
 Ad_type
-"global" "targeted" "hubs"
+"random" "max_opinion" "min_opinion" "hubs"
 0
 
 CHOOSER
@@ -1277,7 +1277,7 @@ CHOOSER
 138
 Change_model
 Change_model
-"voter" "majority" "degroot" "biased"
+"voter" "biased_average" "degroot" "biased"
 0
 
 BUTTON
@@ -1343,7 +1343,7 @@ SWITCH
 263
 Continuous
 Continuous
-1
+0
 1
 -1000
 
@@ -1375,6 +1375,66 @@ false
 "" ""
 PENS
 "pen-0" 1.0 0 -16777216 true "" "plot Mean_Opinion_Clustering"
+
+SLIDER
+890
+700
+1062
+733
+ad_targets
+ad_targets
+0
+1000
+100.0
+20
+1
+NIL
+HORIZONTAL
+
+SLIDER
+890
+740
+1062
+773
+ad_effect
+ad_effect
+-1
+1
+0.2
+0.1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+890
+780
+1062
+813
+ad_effectiveness
+ad_effectiveness
+0
+1
+1.0
+0.1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+890
+815
+1062
+848
+ad_count
+ad_count
+0
+100
+5.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 # Complex Networks Toolbox

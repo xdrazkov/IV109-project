@@ -10,18 +10,29 @@ to Opinions [bias mem tol]
   set-plot-y-range 0 1
   let t 0
   if Reset [init_opinions_cont]
+
+  ; ad frequency
+  let ad_freq (round (Iterations / (ad_count + 2)))
+
   repeat Iterations [
     set-current-plot "Opinion clustering"
     plotxy t Mean_Opinion_Clustering
     set-current-plot "General"
-    
+
     ; print (word "Iteration " t)
     OpCh mem tol
-    if Advertising [
+    if Advertising and ((t mod ad_freq) = 0 and t != 0 and t != Iterations) [
       if ad_type = "random" [MassAd]
       if ad_type = "max_opinion" [MaxAd]
       if ad_type = "min_opinion" [MinAd]
       if ad_type = "hubs" [HubsAd]
+
+      set-current-plot "General"
+      plot-pen-up
+      plotxy t 0
+      plot-pen-down
+      plotxy t plot-y-max
+
     ]
     ; Plot the average opinion
     let avg mean [current_state] of nodes
@@ -43,8 +54,16 @@ to OpCh [mem tol]
                 new-state ([current_state] of (one-of link-neighbors))
             ]
         ]
-        if (Change_model = "majority") [
-            new-state (round (sum ([current_state] of link-neighbors) / count link-neighbors))
+        if (Change_model = "biased_average") [
+            ; Take the average of neighbors' opinions withing a tolerance range
+            ; tolerance range = 0.2
+            let neighbors_opinions_sum sum ([current_state] of link-neighbors with [abs (current_state - s) <= 0.2])
+            let neighbors_opinions_count count link-neighbors with [abs (current_state - s) <= 0.2]
+            ifelse neighbors_opinions_count = 0 [
+                new-state s
+            ] [
+                new-state neighbors_opinions_sum / neighbors_opinions_count
+            ]
         ]
         let bias 0.03
         if (Change_model = "biased") [
