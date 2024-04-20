@@ -1,12 +1,8 @@
 ; Opinion Dynamics
-; Iter - Number of iterations
 ; bias - Initial Opinion bias
 ; mem - Memory
-; Ad - Advertising - 0 for none, 1 for mass, 2 for targeted
-; s - Strength of advertising
-; p - Probability of influence
 ; tol - Tolerance range
-to Opinions [Iter bias mem Ad s p tol]
+to Opinions [bias mem tol]
   set-current-plot "Opinion clustering"
   clear-plot
   set-current-plot "General"
@@ -14,15 +10,19 @@ to Opinions [Iter bias mem Ad s p tol]
   set-plot-y-range 0 1
   let t 0
   if Reset [init_opinions_cont]
-  repeat Iter [
+  repeat Iterations [
     set-current-plot "Opinion clustering"
     plotxy t Mean_Opinion_Clustering
     set-current-plot "General"
     
     ; print (word "Iteration " t)
     OpCh mem tol
-    if Ad = 1 [MassAd s p]
-    if Ad = 2 [TarAd s p]
+    if Advertising [
+      if ad_type = "random" [MassAd]
+      if ad_type = "max_opinion" [MaxAd]
+      if ad_type = "min_opinion" [MinAd]
+      if ad_type = "hubs" []
+    ]
     ; Plot the average opinion
     let avg mean [current_state] of nodes
     plotxy t avg
@@ -66,32 +66,37 @@ end
 
 ; Advertising
 
-; Mass advertising
+; Random advertising
 ; Nudge every node to 1 with a certain probability
-; s - strength
-; p - probability of influence
-to MassAd [s p]
-  ask nodes [
-    if random-float 1 < p [
+to MassAd []
+  ask (n-of (min (list ad_targets (count nodes))) nodes) [
+    if random-float 1 < ad_effectiveness [
       let curr current_state
-      ; TODO
-      new-state (curr + s)
+      new-state (min list (max list (curr + ad_effect) 0) 1)
       set-state
     ]
   ]
 end
 
-
-; Targeted advertising
+; Target those with max opinion
 ; Nudge nodes with opinion < 0 to 1 with a certain probability
-; s - strength
-; p - probability of influence
-to TarAd [s p]
-  ask nodes with [current_state < 0] [
-    if random-float 1 < p [
+to MaxAd []
+  ask max-n-of (max (list ad_targets (count nodes))) nodes [current_state] [
+    if random-float 1 < ad_effectiveness [
       let curr current_state
-      ; TODO
-      new-state (curr + s)
+      new-state (min list (max list (curr + ad_effect) 0) 1)
+      set-state
+    ]
+  ]
+end
+
+; Target those with max opinion
+; Nudge nodes with opinion < 0 to 1 with a certain probability
+to MinAd []
+  ask min-n-of (max (list ad_targets (count nodes))) nodes [current_state] [
+    if random-float 1 < ad_effectiveness [
+      let curr current_state
+      new-state (min list (max list (curr + ad_effect) 0) 1)
       set-state
     ]
   ]

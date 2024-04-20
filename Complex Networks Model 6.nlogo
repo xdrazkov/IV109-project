@@ -1113,8 +1113,8 @@ num_nodes
 num_nodes
 5
 1500
-445.0
-20
+1000.0
+10
 1
 NIL
 HORIZONTAL
