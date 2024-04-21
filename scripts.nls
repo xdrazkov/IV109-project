@@ -5,6 +5,7 @@ to init_opinions_cont
     set-state
     set color scale-color blue current_state 0 1
   ]
+  compute-centralities
 end
 
 to ba_pa

@@ -610,6 +610,7 @@ to load
   clear
   nw:set-context nodes links
   nw:load-graphml user-file
+  compute-centralities
 end
 
 to export [view]
@@ -857,7 +858,7 @@ Degree Distribution
 Degree
 Nb Nodes
 0.0
-100.0
+50.0
 0.0
 10.0
 true
@@ -875,14 +876,14 @@ Clustering distribution
 Clustering
 Nb Nodes
 0.0
-10.0
+100.0
 0.0
 10.0
 true
 false
 "" ""
 PENS
-"default" 1.0 1 -6459832 true "" ""
+"default" 1.0 1 -6459832 true "" "histogram [round (nw:clustering-coefficient * 100)] of nodes with [degree > 2]"
 
 MONITOR
 1360
@@ -961,7 +962,7 @@ num_nodes
 num_nodes
 5
 1500
-205.0
+275.0
 10
 1
 NIL
@@ -1157,32 +1158,15 @@ Reset
 -1000
 
 MONITOR
-1539
-526
-1614
-571
+1538
+491
+1613
+536
 Avg Pth Lgth
 Average-Path-Length
 3
 1
 11
-
-BUTTON
-1535
-440
-1637
-473
-Compute stats
-clear-all-plots\ncompute-centralities\ncarefully [do-plot ([degree] of nodes) \"Degree\"][]\ncarefully [do-plot ([nw:clustering-coefficient] of nodes) \"Clustering\"][]
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
 
 SWITCH
 1538
@@ -1196,10 +1180,10 @@ Continuous
 -1000
 
 MONITOR
-1538
-478
-1645
-523
+1536
+442
+1643
+487
 Opinion clustering
 Mean_Opinion_Clustering
 3
