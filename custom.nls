@@ -2,7 +2,7 @@
 ; bias - Initial Opinion bias
 ; mem - Memory
 ; tol - Tolerance range
-to Opinions [bias mem tol]
+to Opinions
   set-current-plot "Opinion clustering"
   clear-plot
   set-current-plot "General"
@@ -20,7 +20,7 @@ to Opinions [bias mem tol]
     set-current-plot "General"
 
     ; print (word "Iteration " t)
-    OpCh mem tol
+    OpCh
     if Advertising and ((t mod ad_freq) = 0 and t != 0 and t != Iterations) [
       if ad_type = "random" [MassAd]
       if ad_type = "max_opinion" [MaxAd]
@@ -44,7 +44,7 @@ end
 ; Opinion change
 ; mem - Memory
 ; tol - tolerance range
-to OpCh [mem tol]
+to OpCh
     no-display
     ask nodes [
         let s current_state
@@ -72,6 +72,15 @@ to OpCh [mem tol]
             let nom memory * current_state + ((current_state ^ bias) * neighbors_opinions_sum)
             let denom memory + ((current_state ^ bias) * neighbors_opinions_sum) + ((1 - current_state) ^ bias) * (neighbors_opinions_count - neighbors_opinions_sum)
             new-state nom / denom
+        ]
+        ; Randomly pick a neighbor and move by 50% of the distance between the his opinion and mine
+        if (Change_model = "continuous_voter") [
+            if (count link-neighbors != 0) [
+                let neighbor one-of link-neighbors
+                let neighbor_state [current_state] of neighbor
+                let diff neighbor_state - s
+                new-state s + diff * 0.9
+            ]
         ]
         set-state
     ]

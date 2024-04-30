@@ -962,7 +962,7 @@ num_nodes
 num_nodes
 5
 1500
-275.0
+715.0
 10
 1
 NIL
@@ -1042,7 +1042,7 @@ BUTTON
 1446
 48
 Start
-Opinions Bias_ 0 2
+Opinions
 NIL
 1
 T
@@ -1062,7 +1062,7 @@ Iterations
 Iterations
 0
 250
-51.0
+30.0
 1
 1
 NIL
@@ -1105,7 +1105,7 @@ SWITCH
 48
 Advertising
 Advertising
-0
+1
 1
 -1000
 
@@ -1126,7 +1126,7 @@ CHOOSER
 140
 Change_model
 Change_model
-"voter" "biased_average" "degroot" "biased"
+"voter" "biased_average" "degroot" "biased" "continuous_voter"
 0
 
 BUTTON
@@ -1262,7 +1262,7 @@ ad_count
 ad_count
 0
 100
-5.0
+0.0
 1
 1
 NIL
@@ -2017,6 +2017,52 @@ NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
+<experiments>
+  <experiment name="No ad, voter, continuous" repetitions="1" runMetricsEveryStep="true">
+    <go>Opinions Bias_ 0 2</go>
+    <timeLimit steps="5"/>
+    <metric>mean [current_state] of nodes</metric>
+    <enumeratedValueSet variable="Continuous">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="Iterations">
+      <value value="30"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ad_count">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="Reset">
+      <value value="true"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ad_effect">
+      <value value="0.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="Bias_">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ad_targets">
+      <value value="100"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="Ad_type">
+      <value value="&quot;random&quot;"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="Advertising">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="num_nodes">
+      <value value="715"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="Memory">
+      <value value="0.95"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="ad_effectiveness">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="Change_model">
+      <value value="&quot;voter&quot;"/>
+    </enumeratedValueSet>
+  </experiment>
+</experiments>
 @#$#@#$#@
 @#$#@#$#@
 default
