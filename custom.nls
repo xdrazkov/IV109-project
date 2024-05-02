@@ -1,3 +1,8 @@
+globals [
+    iters
+    ad_freq
+]
+
 ; Opinion Dynamics
 ; bias - Initial Opinion bias
 ; mem - Memory
@@ -8,20 +13,26 @@ to Opinions
   set-current-plot "General"
   clear-plot
   set-plot-y-range 0 1
-  let t 0
-  if Reset [init_opinions_cont]
 
-  ; ad frequency
-  let ad_freq (round (Iterations / (ad_count + 2)))
+  if Reset [init_opinions_cont]
+  set iters 0
+  set ad_freq (round (Iterations / (ad_count + 2)))
 
   repeat Iterations [
-    set-current-plot "Opinion clustering"
-    plotxy t Mean_Opinion_Clustering
+    step
+    set iters iters + 1
+  ]
+  stop
+end
+
+to step
+  set-current-plot "Opinion clustering"
+    plotxy iters Mean_Opinion_Clustering
     set-current-plot "General"
 
     ; print (word "Iteration " t)
     OpCh
-    if Advertising and ((t mod ad_freq) = 0 and t != 0 and t != Iterations) [
+    if Advertising and ((iters mod ad_freq) = 0 and iters != 0 and iters != Iterations) [
       if ad_type = "random" [MassAd]
       if ad_type = "max_opinion" [MaxAd]
       if ad_type = "min_opinion" [MinAd]
@@ -29,16 +40,15 @@ to Opinions
 
       set-current-plot "General"
       plot-pen-up
-      plotxy t 0
+      plotxy iters 0
       plot-pen-down
-      plotxy t plot-y-max
-
+      plotxy iters plot-y-max
     ]
     ; Plot the average opinion
     let avg mean [current_state] of nodes
-    plotxy t avg
-    set t t + 1
-  ]
+    plotxy iters avg
+  
+    if iters = Iterations [ stop ] 
 end
 
 ; Opinion change
@@ -96,7 +106,7 @@ end
 
 ; Random advertising
 ; Nudge every node to 1 with a certain probability
-to MassAd []
+to MassAd
   ask (n-of (min (list ad_targets (count nodes))) nodes) [
     if random-float 1 < ad_effectiveness [
       let curr current_state
@@ -132,7 +142,7 @@ end
 
 ; Target those with most neighbors
 ; Nudge nodes with opinion < 0 to 1 with a certain probability
-to HubsAd []
+to HubsAd
   ask min-n-of (min (list ad_targets (count nodes))) nodes [count neighbors] [
     if random-float 1 < ad_effectiveness [
       let curr current_state
