@@ -143,7 +143,7 @@ end
 ; Target those with most neighbors
 ; Nudge nodes with opinion < 0 to 1 with a certain probability
 to HubsAd
-  ask max-n-of (min (list ad_targets (count nodes))) nodes [count neighbors] [
+  ask max-n-of (min (list ad_targets (count nodes))) nodes [count link-neighbors] [
     if random-float 1 < ad_effectiveness [
       let curr current_state
       new-state (min list (max list (curr + ad_effect) 0) 1)
