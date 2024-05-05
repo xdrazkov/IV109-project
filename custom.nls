@@ -185,3 +185,11 @@ to-report Mean_Opinion_Clustering
   report sum-opinion-clustering / count nodes
 end
 
+to-report Standard_Deviation
+  let avg mean [current_state] of nodes
+  let res 0
+  ask nodes [
+    set res res + (current_state - avg) ^ 2
+  ]
+  report sqrt (res / count nodes)
+end
