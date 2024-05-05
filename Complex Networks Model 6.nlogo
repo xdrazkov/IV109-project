@@ -962,7 +962,7 @@ num_nodes
 num_nodes
 5
 1500
-715.0
+385.0
 10
 1
 NIL
@@ -1218,7 +1218,7 @@ ad_targets
 0
 1000
 100.0
-20
+10
 1
 NIL
 HORIZONTAL
@@ -1262,11 +1262,22 @@ ad_count
 ad_count
 0
 100
-0.0
+4.0
 1
 1
 NIL
 HORIZONTAL
+
+MONITOR
+1645
+440
+1762
+485
+Standard Deviation
+Standard_Deviation
+5
+1
+11
 
 @#$#@#$#@
 # Complex Networks Toolbox
@@ -2018,49 +2029,14 @@ NetLogo 6.4.0
 @#$#@#$#@
 @#$#@#$#@
 <experiments>
-  <experiment name="No ad, voter, continuous" repetitions="1" runMetricsEveryStep="true">
-    <go>Opinions Bias_ 0 2</go>
-    <timeLimit steps="5"/>
+  <experiment name="Noad_voter_continuous" repetitions="157" runMetricsEveryStep="true">
+    <setup>Opinions</setup>
+    <go>step</go>
+    <timeLimit steps="1000000000"/>
     <metric>mean [current_state] of nodes</metric>
-    <enumeratedValueSet variable="Continuous">
-      <value value="true"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="Iterations">
-      <value value="30"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="ad_count">
-      <value value="0"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="Reset">
-      <value value="true"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="ad_effect">
-      <value value="0.2"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="Bias_">
-      <value value="0"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="ad_targets">
-      <value value="100"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="Ad_type">
-      <value value="&quot;random&quot;"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="Advertising">
-      <value value="false"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="num_nodes">
-      <value value="715"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="Memory">
-      <value value="0.95"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="ad_effectiveness">
-      <value value="1"/>
-    </enumeratedValueSet>
-    <enumeratedValueSet variable="Change_model">
-      <value value="&quot;voter&quot;"/>
-    </enumeratedValueSet>
+    <metric>(count nodes with [current_state &gt; 0.5])  / (count nodes)</metric>
+    <metric>Mean_Opinion_Clustering</metric>
+    <metric>Standard_Deviation</metric>
   </experiment>
 </experiments>
 @#$#@#$#@
