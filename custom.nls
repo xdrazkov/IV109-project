@@ -26,29 +26,30 @@ to Opinions
 end
 
 to step
+; Plot the opinion clustering
   set-current-plot "Opinion clustering"
-    plotxy iters Mean_Opinion_Clustering
-    set-current-plot "General"
+  plotxy iters Mean_Opinion_Clustering
 
-    ; print (word "Iteration " t)
-    OpCh
-    if Advertising and ((iters mod ad_freq) = 0 and iters != 0 and iters != Iterations) [
-      if ad_type = "random" [MassAd]
-      if ad_type = "max_opinion" [MaxAd]
-      if ad_type = "min_opinion" [MinAd]
-      if ad_type = "hubs" [HubsAd]
+  set-current-plot "General"
+  ; Plot the average opinion
+  let avg mean [current_state] of nodes
+  plotxy iters avg
 
-      set-current-plot "General"
-      plot-pen-up
-      plotxy iters 0
-      plot-pen-down
-      plotxy iters plot-y-max
-    ]
-    ; Plot the average opinion
-    let avg mean [current_state] of nodes
+  OpCh
+  if Advertising and ((iters mod ad_freq) = 0 and iters != 0 and iters != Iterations) [
+    if ad_type = "random" [MassAd]
+    if ad_type = "max_opinion" [MaxAd]
+    if ad_type = "min_opinion" [MinAd]
+    if ad_type = "hubs" [HubsAd]
+
+    plot-pen-up
+    plotxy iters 0
+    plot-pen-down
+    plotxy iters plot-y-max
     plotxy iters avg
-  
-    if iters = Iterations [ stop ] 
+  ]
+
+  if iters = Iterations [ stop ] 
 end
 
 ; Opinion change
