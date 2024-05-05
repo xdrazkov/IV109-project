@@ -3,16 +3,9 @@ import pyperclip
 def process_simulation_data(data: str):
     data = data[2:].replace('"', '')
     values = data.split(",")
-    means = []
-    votes = []
     result = ""
-    for i in range(0, len(values), 3):
-        means.append(values[i + 1])
-        votes.append(values[i + 2])
-        result += values[i + 1] + "	" + values[i + 2] + "\n"
-    print("Average mean: ", sum([float(x) for x in means]) / len(means))
-    print("Average votes: ", sum([float(x) for x in votes]) / len(votes))
-    
+    for i in range(0, len(values), 5):
+        result += values[i + 1] + "	" + values[i + 2] + "	" + values[i + 3] + "	" + values[i + 4] + "\n"
     pyperclip.copy(result)
 
 
