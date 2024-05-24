@@ -4,6 +4,8 @@ to init_opinions_cont
     new-state current_state + abs(current_state) * Bias_
     set-state
     set color scale-color blue current_state 0 1
+    ; set infected to false
+    set infected false
   ]
   compute-centralities
 end

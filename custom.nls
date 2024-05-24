@@ -153,6 +153,65 @@ to HubsAd
   ]
 end
 
+; infect [ad_targets] nodes who are neighbors of a random node - neighborhood of size [ad_targets]
+to InfectNeighbors
+  ; Initialize the count of infected nodes
+  let infected_count 0
+  
+  ; Pick a random node and infect it
+  let random_node one-of nodes
+  ask random_node [
+    set infected true
+  ]
+  set infected_count 1
+
+  ; Infect neighbors until exactly ad_targets nodes are infected
+  while [infected_count < ad_targets] [
+    let newly_infected 0
+    ask nodes with [infected = true] [
+      if newly_infected + infected_count < ad_targets [
+        ask link-neighbors with [infected = false] [
+          if newly_infected + infected_count < ad_targets [
+            set infected true
+            set newly_infected newly_infected + 1
+          ]
+        ]
+      ]
+    ]
+    set infected_count infected_count + newly_infected
+
+    ; Break the loop if no new infections were made to prevent infinite loop
+    if newly_infected = 0 [
+      stop
+    ]
+  ]
+end
+
+
+
+; Uninfect all nodes - set attribute infected to false
+to Uninfect
+  ask nodes [
+    set infected false
+  ]
+end
+
+; color/uncolor infected nodes red
+to Colorinfected
+  ask nodes [
+    if infected = true [
+      set color red
+    ]
+  ]
+end
+
+; color nodes according to their opinion
+to ColorNodes
+  ask nodes [
+    set color scale-color blue current_state 0 1
+  ]
+end
+
 
 to-report Mean_Opinion
   report mean [current_state] of nodes
