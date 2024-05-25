@@ -1116,8 +1116,8 @@ CHOOSER
 94
 Ad_type
 Ad_type
-"random" "max_opinion" "min_opinion" "hubs"
-0
+"random" "max_opinion" "min_opinion" "hubs" "neighborhood"
+4
 
 CHOOSER
 1525
@@ -1285,7 +1285,7 @@ BUTTON
 1752
 138
 infect
-uninfect\nInfectNeighbors
+Infect\nColorinfected
 NIL
 1
 T
@@ -1302,7 +1302,7 @@ BUTTON
 1752
 178
 color
-ColorNodes\nColorinfected
+uninfect\nColorNodes
 NIL
 1
 T
