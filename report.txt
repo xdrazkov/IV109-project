@@ -1,0 +1,52 @@
+Projekt
+V rámci projektu trénujete a prokazujete dovednosti – použití probíraných nástrojů, porozumnění metodologii modelování, schopnost zpracování a dokumentování modelu.
+Projekt spočívá v modelování a simulaci vybraného problému v jednom z nástrojů probíraných na přednášce. Cílem projektu je vytvořit model a napsat o něm zprávu. Níže jsou uvedeny možná témata projektů – jde pouze o základní témata, nikoliv konkrétní problémy. Součástí projektu je i přesná specifikace modelovaného problému. V případě zájmu je možné navrhnout i vlastní téma.
+Modely jsou typicky vytvářeny v jednom z nástrojů probíraných na přednášce. Je ale možné vytvářet projekt i za použití jiného modelovacího nástroje, případně bez použití specializovaných nástrojů pouze za pomoci obecného programovacího jazyka (toto se týká zejména pokud byste měli zájem o oblast genetických algoritmů či modelovaní adaptace).
+Forma zprávy
+Rozsah zprávy by měl být asi 3-6 stránek. Snažte se psát jasně a stručně, pokud uvedete všechny důležité myšlenky, text nemusí být dlouhý. Zpráva by měla obsahovat následující:
+    stručné uvedení do tématu, objasnění základních pojmů,
+    přesnou formulaci modelovaného problému, případná relevantní data,
+    popis zvoleného přístupu k modelování a základních prvků modelu, vztahů a zpětných vazeb, vysvětlení základních rovnic/pravidel,
+    popis výsledků simulace, ilustrace základního běhu modelu,
+    popis provedených analýz modelu (analýza citlivosti jednotlivých parametrů, apd), výsledky analýz a jejich slovní interpretace,
+    zhodnocení závěrů simulace, diskuze možných rozšíření. 
+
+Zpráva:
+
+Advertising effect on social networks
+
+Introduction
+The aim of this project is to model the effect of advertising on different social network topologies. The project is based on the idea that the effect of advertising on social networks is not only dependent on the number of people who see the advertisement, but also on the structure of the network. The project will focus on the effect of advertising on different network topologies, such as small-world networks, scale-free networks, and random networks.
+The scenario is as follows: there is a referendum coming up, and there are two competing campaigns. Each person has a continuous opinion on the issue, which can be influenced by advertising. The collective opinion in the starting opinion is roughly even. The goal of the project is to model the effect of advertising on the final opinion of the population, and to compare the effect of advertising on different network topologies.
+
+Model
+We model the social network as a graph, where each node represents a person, and each edge represents a social connection between two people. The opinion of each person is represented as a continuous variable between 0 and 1. The opinion of each person is influenced by the opinions of their neighbors, and by the advertising campaign. 
+For modeling of the effect of social connections, we use the Voter model. In the Voter model, in each iteration, each person adopts the opinion of one of their neighbors at random. The Voter model is a simple model of opinion dynamics on social networks, and has been used to model the spread of opinions on social networks.
+The effect of advertising is modeled as a constant increase in the opinion of each person who sees the advertisement (with the exception of the situation, when the person's opinion would exceed 1 - in this case, the opinion is set to 1). The effect of advertising is the same for all people who see the advertisement.
+
+Network topologies
+We compare the effect of advertising on three different network topologies:
+    Watts-Strogatz small-world network: In the Watts-Strogatz small-world network, each node is connected to its k nearest neighbors in a ring topology. With probability p, each edge is rewired to a random node in the network. The Watts-Strogatz small-world network has a high clustering coefficient and a low average path length, which means that it has both local and global structure. It lacks the power-law degree distribution of the scale-free network.
+
+    Barabasi-Albert scale-free network: In the Barabasi-Albert scale-free network, nodes are added to the network one by one, and each new node is connected to m existing nodes with a probability proportional to the number of connections of the existing nodes. The Barabasi-Albert scale-free network has a power-law degree distribution, which means that there are a few nodes with a very high degree, and many nodes with a low degree. It also has a low average path length, which means that it has a high level of connectivity. However, it has a low clustering coefficient, which means that it has a low level of local structure.
+
+    Erdos-Renyi random network: In the Erdos-Renyi random network, each pair of nodes is connected with a fixed probability p. The Erdos-Renyi random network has a low clustering coefficient and a low average path length, however the nodes have a Poisson degree distribution, which means that the network is more homogeneous than the scale-free network.
+
+    Grid network: In the grid network, each node is connected to its four nearest neighbors. The grid network has a high clustering coefficient, a high average path length, and nearly all nodes have the same degree.
+
+    Geometric network: In the geometric network, initially, each node is placed at a random position in a square. Then, each node is connected to all other nodes within a fixed distance r. The geometric network's attributes depend on the value of r. In our model, it has a high clustering coefficient, a low average path length, and a Poisson degree distribution.
+
+Types of advertising
+We consider multiple types of advertising - all of them target a fixed number p of people in the network. The types of advertising are as follows:
+    Random advertising: In random advertising, the p people who see the advertisement are chosen at random from the network. This type of advertising does not take into account the structure of the network.
+
+    Hubs advertising: In hubs advertising, the p people who see the advertisement are chosen from the nodes with the highest degree in the network. This type of advertising targets the most connected people in the network.
+
+    Neighborhood advertising: In neighborhood advertising, the algorithm first chooses a random node in the network and adds it to the list l. Then, while the size of the list is less than p, the algorithm iterates through l, and for each node in l, it adds its neighbors to the list. This type of advertising targets the local structure of the network.
+
+    Minimum advertising: In minimum advertising, the p people who see the advertisement are chosen from the nodes with the opinion most different from the advertising campaign. This type of advertising targets the opposition in the network.
+
+    Maximum advertising: In maximum advertising, the p people who see the advertisement are chosen from the nodes with the opinion most similar to the advertising campaign. This type of advertising targets the supporters in the network.
+
+Simulation
+For the simulation, we use NetLogo, a multi-agent programmable modeling environment. We started off from a network science library, from which we primarily used the implementation of the network topologies. We implmented the opinion dynamics and the advertising campaigns ourselves, as well as various statistics reporting the state of the network and their visualization.
