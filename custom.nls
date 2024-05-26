@@ -10,7 +10,7 @@ globals [
 to Opinions
   set-current-plot "Opinion clustering"
   clear-plot
-  set-current-plot "General"
+  set-current-plot "Mean Opinion"
   clear-plot
   set-plot-y-range 0 1
 
@@ -30,7 +30,7 @@ to step
   set-current-plot "Opinion clustering"
   plotxy iters Mean_Opinion_Clustering
 
-  set-current-plot "General"
+  set-current-plot "Mean Opinion"
   ; Plot the average opinion
   let avg mean [current_state] of nodes
   plotxy iters avg
