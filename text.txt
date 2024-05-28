@@ -1,0 +1,96 @@
+Advertising effect on social networks
+
+Introduction
+The aim of this project is to model the effect of advertising on different social network topologies. The project is based on the idea that the effect of advertising on social networks is not only dependent on the number of people who see the advertisement, but also on the structure of the network. The project will focus on the effect of advertising on different network topologies, such as small-world networks, scale-free networks, and random networks.
+The scenario is as follows: there is a referendum coming up, and there are two competing campaigns. Each person has a continuous opinion on the issue, which can be influenced by advertising. The collective opinion in the starting opinion is roughly even. The goal of the project is to model the effect of advertising on the final opinion of the population, and to compare the effect of advertising on different network topologies.
+
+Model
+We model the social network as a graph, where each node represents a person, and each edge represents a social connection between two people. The opinion of each person is represented as a continuous value between 0 and 1. The opinion of each person is influenced by the opinions of their neighbors, and by the advertising campaign. The advertising campaign is in the support of opinion 1.
+For modeling of the effect of social connections, we use the Voter model. In the Voter model, in each iteration, each person adopts the opinion of one of their neighbors at random. The Voter model is a simple model of opinion dynamics on social networks, and has been used to model the spread of opinions on social networks.
+The effect of advertising is modeled as a constant increase in the opinion of each person who sees the advertisement (with the exception of the situation, when the person's opinion would exceed 1 - in this case, the opinion is set to 1). The effect of advertising is the same for all people who see the advertisement.
+
+Network topologies
+We compare the effect of advertising on four different network topologies:
+Watts-Strogatz small-world network: In the Watts-Strogatz small-world network, each node is connected to its k nearest neighbors in a ring topology. With probability p, each edge is rewired to a random node in the network. The Watts-Strogatz small-world network has a high clustering coefficient and a low average path length, which means that it has both local and global structure. It lacks the power-law degree distribution of the scale-free network.
+Barabasi-Albert scale-free network: In the Barabasi-Albert scale-free network, nodes are added to the network one by one, and each new node is connected to m existing nodes with a probability proportional to the number of connections of the existing nodes. The Barabasi-Albert scale-free network has a power-law degree distribution, which means that there are a few nodes with a very high degree, and many nodes with a low degree. It also has a low average path length, which means that it has a high level of connectivity. However, it has a low clustering coefficient, which means that it has a low level of local structure.
+Erdos-Renyi random network: In the Erdos-Renyi random network, each pair of nodes is connected with a fixed probability p. The Erdos-Renyi random network has a low clustering coefficient and a low average path length, however the nodes have a Poisson degree distribution, which means that the network is more homogeneous than the scale-free network.
+Grid network: In the grid network, each node is connected to its four nearest neighbors. The grid network has a high clustering coefficient, a high average path length, and nearly all nodes have the same degree.
+
+Types of advertising
+We consider multiple types of advertising - all of them target a fixed number p of people in the network. The types of advertising are as follows:
+Random advertising: In random advertising, the p people who see the advertisement are chosen at random from the network. This type of advertising does not take into account the structure of the network.
+Hubs advertising: In hubs advertising, the p people who see the advertisement are chosen from the nodes with the highest degree in the network. This type of advertising targets the most connected people in the network.
+Neighborhood advertising: In neighborhood advertising, the algorithm first chooses a random node in the network and adds it to the list l. Then, while the size of the list is less than p, the algorithm iterates through l, and for each node in l, it adds its neighbors to the list. This type of advertising targets the local structure of the network.
+The social network with targeted neighborhood marked red
+
+Minimum advertising: In minimum advertising, the p people who see the advertisement are chosen from the nodes with the opinion most different from the advertising campaign. This type of advertising targets the opposition in the network.
+Maximum advertising: In maximum advertising, the p people who see the advertisement are chosen from the nodes with the opinion most similar to the advertising campaign. This type of advertising targets the supporters in the network.
+
+Implementation in NetLogo
+For the simulation, we use NetLogo, a multi-agent programmable modeling environment. We started off from a network science library, from which we primarily used the implementation of the network topologies. We implemented the opinion dynamics and the advertising campaigns ourselves, as well as various statistics reporting the state of the network and their visualization. The initial opinion of each node is set randomly.
+
+Our project in Netlogo
+The nodes are colored according to their opinion - the darker the color of the node, the closer the opinion of the node is to zero. If the advertising is turned on, the Mean Opinion plot contains vertical lines signaling when the advertising occurred. The Opinion Clustering plot shows the percentage of nodes whose neighbors have similar opinions (the difference of their opinions is less than 0.1). The Clustering distribution plot shows the distribution of the clustering coefficient - ratio of connected neighbors to all possible connections of the neighbors.
+
+
+The social network after 10 iterations
+
+The social network after 20 iterations
+
+The social network after 30 iterations
+
+
+Simulation
+We compare the effect of advertising on the final opinion of the population for different network topologies and different types of advertising.
+We have run the simulation on roughly 1000 nodes for 30 iterations. The effect of the ad is an increase by 0.2 of the opinion of the ad target. The ad is run 5 times in regular intervals and targets 100 nodes in the network. At the end of each run, we measured the mean opinion of all nodes in the network and the percentage of nodes whose opinion is above 0.5. Since the results for the Barabasi-Albert scale-free network with the hubs advertising campaign were interesting, we decided to also measure the importance of the number of targets in this configuration. We have been increasing the number of hubs that see the advertisement and using the same metrics as before. We aggregated the mean opinion of the nodes and the percentage of nodes whose opinion is above 0.5 for each configuration by averaging the results over all runs. The results are presented in the next section.
+
+
+Analysis
+First, we will look at the results of the simulation for different network topologies and different types of advertising. We start by looking at the results for the mean opinion of the nodes in the network. The results are presented in the following table:
+
+	WS	BA	ER	Grid
+No ad	0.50	0.50	0.51	0.49
+Random	0.60	0.59	0.59	0.59
+Min 0.60	0.61	0.60	0.61
+Max	0.51	0.53	0.53	0.50
+Hubs	0.60	0.76	0.65	0.59
+Neighborhood	0.58	0.65	0.60	0.60
+
+Firstly, we can see that the mean opinion of the nodes in the network is always around 0.5 when there is no advertising. This is expected, as the starting opinion of each node is set randomly between 0 and 1.
+
+The Random strategy reaches a mean opinion of around 0.59 in all network topologies. This is expected, as the Random strategy targets a random set of nodes in the network, and does not take into account nor the structure of the network, nor the opinions of the nodes.
+
+The Min strategy reaches a mean opinion of around 0.60 in all network topologies. This is only slightly higher than the Random strategy. This type of ad does not "waste" any resources on the nodes, which have opinion higher than 0.8 and would not be influenced as much by the advertising (as the opinion is capped at 1). This is why this type od is ideal for increasing the mean opinion of the network (if we are ignoring the topology of the network).
+
+The Max strategy reaches a mean opinion of around 0.51 in all network topologies - only a very small increase over no advertising. This is not surprising, as it targets the nodes with the highest opnion, quickly reaching the cap of 1 and then not being influenced by the further advertising directed at them. This strategy is not effective in changing the overall opinion of the network. Notice, that this strategy is only slightly successful in networks with a heterogeneous degree distribution, which points to the fact that highly connected nodes are crucial in the spread of information on social networks.
+
+The Hubs strategy has the most interesting results - it greatly matters in which network topology it is used. The Grid topology had the lowest mean opinion - 0.60. This is not surprising as in this topology all nodes have degree at most 4. The Watts-Strogatz small-world network ended with mean opinion 0.60 - no improvement over random advertising. The Erdos-Renyi random network has a Poisson degree distribution, which means that there are a few nodes with a high degree. This resulted in a mean opinion of 0.65 - significant increase compared to random advertising. The Barabasi-Albert scale-free network has a power-law degree distribution, which means that there are a few nodes with a extremely high degree. This resulted in a mean opinion of 0.76 - the highest increase compared to random advertising. This shows that the Hubs advertising is most effective in networks with a high degree heterogeneity, such as the scale-free networks.
+
+The Neighborhood strategy similar results as the Random strategy except for the Barabasi-Albert network and the Watts-Strogatz network. On the Barabasi-Albert network, the mean opinion was 0.65, which is considerably higher than the Random strategy. This is probably because of the neighborhood building algorithm, in which higher connected nodes are more likely to be added to the list of affected nodes and have a bigger influence on the opinion of the network. On the Watts-Strogatz network, the mean opinion was 0.58, which is lower than the Random strategy. This shows, that on a network with a high clustering coefficient (which is also the case of real world network), it is not effective to target the local structure of the network.
+
+Note that it is easy to numerically check that in the scenario, where nodes do no interact with each other, any type of advertising, which avoids the nodes with opinion higher than 0.8, will result in the mean opinion of the network being 0.6 (5 * 100 * 0.2 / 1000 = 0.1).
+
+Next, we will look at the results for the percentage of nodes whose opinion is above 0.5. The results are presented in the following table:
+
+	WS	BA	ER	Grid
+No ad	0.50	0.51	0.50	0.49
+Random	0.59	0.60	0.58	0.59
+Min	0.61	0.63	0.60	0.65
+Max	0.50	0.52	0.52	0.51
+Hubs	0.62	0.83	0.67	0.60
+Neighborhood	0.60	0.68	0.61	0.61
+
+
+The results for No advertising and Random advertising are the same as for the mean opinion of the nodes.
+In the case of Max advertising, the percentage of nodes whose opinion is above 0.5 barely over 0.5, an even worse result, than for the mean opinion of the nodes. The reason is the same as for the mean opinion of the nodes.
+According to this metric, all other strategies are better than the Random strategy. The percentage of nodes whose opinion is above 0.5 is always higher than the mean opinion of the nodes - the positive effect of the advertising is exemplified in this metric.
+
+Finally, we will look at the results for the Barabasi-Albert scale-free network with the hubs advertising campaign. We have been increasing the number of hubs that see the advertisement and using the same metrics as before. The results are presented in the following table:
+
+    Hubs	% nodes > 0.5
+    Num of targets	5	10	20	30	40	50	60	70	80	90	100	110	120	130	140	150
+    Mean opinion	0.56	0.58	0.63	0.64	0.66	0.69	0.71	0.72	0.75	0.76	0.76	0.78	0.78	0.78	0.79	0.80
+    >0.5	0.58	0.60	0.65	0.68	0.68	0.72	0.75	0.76	0.80	0.82	0.83	0.83	0.84	0.83	0.85	0.85
+
+From the curve, it is apparent that a even a very small number of targets has a major impact on both the mean opinion and the percentage of nodes whose opinion is above 0.5. Already at 10 targets, the effect of the Hubs advertising is as strong as the Random ad with 100 targets. The positive effect of advertising is still increasing with the number of targets, but the effect is diminishing. This again shows the importance of the highly connected nodes in the spread of information on social networks.
+
